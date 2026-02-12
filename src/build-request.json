@@ -1,0 +1,92 @@
+{
+  "kind": "build_request",
+  "title": "Upgrade tractor game to a 3D tractor–trolley farming game with updatable gameplay configuration",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "text": "Implement a 3D version of the tractor game using React Three Fiber, including a controllable tractor with an attached trolley driving in a farm environment, while keeping the existing start/play/game-over/restart loop and supporting both keyboard and on-screen controls.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "मुझे 3Dगेम टैक्टर ट्राली बाला गेम चाहिए जिसमें खेती-बाड़ी हो सके"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The main gameplay scene renders in 3D (not a 2D/top-down canvas) using React Three Fiber.",
+        "The player controls a tractor with a visible attached trolley; movement works on desktop (keyboard) and mobile (on-screen controls).",
+        "The game still has the screens/loop: start -> play -> game over -> restart."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Add farming gameplay activities as core loops (e.g., plowing, sowing, watering, harvesting) that can be performed with the tractor–trolley in the 3D world, with clear objectives and completion/failure conditions tied into the game loop.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "जिसमें खेती-बाड़ी हो सके"
+        ]
+      },
+      "acceptanceCriteria": [
+        "At least 3 distinct farming activities are playable in-game (e.g., plowing, sowing, harvesting or watering).",
+        "Each activity has a clear objective shown in the UI (e.g., complete X rows/plots within time or avoid missing plots).",
+        "Completing an activity advances progress and/or score; failure routes to game-over with a restart option."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Extend the content-driven GameConfig so 3D scene parameters and farming-activity parameters can be updated from the backend, and ensure the frontend loads and applies this GameConfig on startup and during admin updates (without requiring gameplay code changes for tuning/balancing).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "और मैं उसमें नई अपडेट डाल सकूं"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend GameConfig includes fields to tune 3D gameplay and farming activities (e.g., tractor speed, turning, field/plot layout, activity durations/targets, difficulty settings).",
+        "Frontend loads GameConfig from the backend on startup and uses it to drive gameplay tuning (speed, objectives, layout, etc.).",
+        "Admin-only UI can update the new GameConfig fields and changes take effect after reload (or via an explicit refresh action)."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add a Play Store–friendly delivery path by making the game UI fully mobile-responsive and adding developer documentation explaining how to wrap the web build in an Android WebView/wrapper for Play Store upload.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "जिसे में प्ले स्टोर पर अपलोड कर सकूं"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Game UI is responsive on common mobile viewport sizes, with touch-friendly controls and readable HUD.",
+        "Repository includes a short documentation page describing a WebView/wrapper approach to publish the web game to Play Store (without adding native Android code to this project)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Keep all Motoko logic in a single backend actor (backend/main.mo) per the single-actor architecture constraint.",
+    "Do not modify any frontend files under the immutable paths listed in SYSTEM_CONTEXT (compose those components/hooks instead).",
+    "Do not introduce non-supported technologies (no external databases, no third-party auth beyond Internet Identity, no WebSockets)."
+  ],
+  "nonGoals": [
+    "Building or shipping a native Android (Kotlin/Java) app inside this codebase.",
+    "Actually uploading the app to the Play Store or managing Play Console assets/listing.",
+    "Advanced vehicle physics or realistic farming machinery simulation beyond simple arcade-style controls and interactions."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

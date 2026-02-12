@@ -1,0 +1,110 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-a-3d-version-of-the-tractor-game-using-react-three-fiber-including-a-controllable-tractor-with-an-attached-trolley-driving-in-a-farm-environment-while-keeping-the-existing-start-play-game-over-restart-loop-and-supporting-both-keyboard-and-on-screen-controls",
+      "featureTitle": "Implement a 3D version of the tractor game using React Three Fiber, including a controllable tractor with an attached trolley driving in a farm environment, while keeping the existing start/play/game-over/restart loop and supporting both keyboard and on-screen controls.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/game/assets/textures.ts",
+        "frontend/src/game/input/OnScreenControls.tsx",
+        "frontend/src/game/input/useCombinedControls.ts",
+        "frontend/src/game/input/useKeyboardControls.ts",
+        "frontend/src/game/screens/GameOverScreen.tsx",
+        "frontend/src/game/screens/GameScreen.tsx",
+        "frontend/src/game/screens/StartScreen.tsx",
+        "frontend/src/game/three/FarmScene.tsx",
+        "frontend/src/game/three/TractorRig.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-farming-gameplay-activities-as-core-loops-e-g-plowing-sowing-watering-harvesting-that-can-be-performed-with-the-tractor-trolley-in-the-3d-world-with-clear-objectives-and-completion-failure-conditions-tied-into-the-game-loop",
+      "featureTitle": "Add farming gameplay activities as core loops (e.g., plowing, sowing, watering, harvesting) that can be performed with the tractor–trolley in the 3D world, with clear objectives and completion/failure conditions tied into the game loop.",
+      "files": [
+        "frontend/src/game/gameplay/ActivityManager.ts",
+        "frontend/src/game/gameplay/activities/HarvestingActivity.ts",
+        "frontend/src/game/gameplay/activities/PlowingActivity.ts",
+        "frontend/src/game/gameplay/activities/SowingActivity.ts",
+        "frontend/src/game/gameplay/activities/types.ts",
+        "frontend/src/game/screens/GameScreen.tsx",
+        "frontend/src/game/three/FarmScene.tsx",
+        "frontend/src/game/ui/HUD.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-extend-the-content-driven-gameconfig-so-3d-scene-parameters-and-farming-activity-parameters-can-be-updated-from-the-backend-and-ensure-the-frontend-loads-and-applies-this-gameconfig-on-startup-and-during-admin-updates-without-requiring-gameplay-code-changes-for-tuning-balancing",
+      "featureTitle": "Extend the content-driven GameConfig so 3D scene parameters and farming-activity parameters can be updated from the backend, and ensure the frontend loads and applies this GameConfig on startup and during admin updates (without requiring gameplay code changes for tuning/balancing).",
+      "files": [
+        "frontend/src/admin/AdminConfigPanel.tsx",
+        "frontend/src/admin/useAdminStatus.ts",
+        "frontend/src/game/config/applyConfig.ts",
+        "frontend/src/game/config/defaults.ts",
+        "frontend/src/game/config/useGameConfig.ts",
+        "frontend/src/game/gameplay/ActivityManager.ts",
+        "frontend/src/game/screens/StartScreen.tsx",
+        "frontend/src/game/three/FarmScene.tsx",
+        "frontend/src/game/three/TractorRig.tsx",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-play-store-friendly-delivery-path-by-making-the-game-ui-fully-mobile-responsive-and-adding-developer-documentation-explaining-how-to-wrap-the-web-build-in-an-android-webview-wrapper-for-play-store-upload",
+      "featureTitle": "Add a Play Store–friendly delivery path by making the game UI fully mobile-responsive and adding developer documentation explaining how to wrap the web build in an Android WebView/wrapper for Play Store upload.",
+      "files": [
+        "frontend/PLAY_STORE.md",
+        "frontend/src/game/input/OnScreenControls.tsx",
+        "frontend/src/game/ui/HUD.tsx",
+        "frontend/src/game/ui/layout.ts",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

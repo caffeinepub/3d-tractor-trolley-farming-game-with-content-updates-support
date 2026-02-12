@@ -1,2 +1,3 @@
-# 3d-tractor-trolley-farming-game-with-content-updates-support
-Exported from Caffeine project: 3D Tractor-Trolley Farming Game with Content Updates Support
+## 3D Tractor-Trolley Farming Game with Content Updates Support
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

@@ -1,0 +1,104 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T05:17:31.146Z",
+  "summary": "Diff adds a new single Motoko backend actor with admin-gated GameConfig updates plus additional profile/farm data APIs, and a new React Three Fiber 3D gameplay loop with start/play/game-over screens, mobile on-screen controls, and three farming activities. However, several requested config-tuning fields and Play Store wrapper documentation are not evidenced, and some backend features appear out of scope.",
+  "missing_requirements": [
+    {
+      "id": "REQ-7",
+      "requirement": "Player controls a tractor with a visible attached trolley driving in a farm environment (3D R3F scene).",
+      "reason": "The diff shows a 3D Canvas and a FarmScene component usage, but no evidence in the provided files that a tractor model exists, that it is controllable in 3D, or that a visible attached trolley is rendered/connected to it. FarmScene implementation is not included in the visible diff summary.",
+      "evidence": [
+        "frontend/src/game/screens/GameScreen.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Backend GameConfig includes fields to tune 3D gameplay and farming activities (e.g., tractor speed/turning, field/plot layout, activity durations/targets/difficulty).",
+      "reason": "Backend GameConfig in the diff contains farmSettings(activityDuration, growthRate, yieldRate) and a few scene-related fields (sceneConfig, gravity, ambientLight), but no explicit tractor movement parameters, field/plot layout parameters, or per-activity targets/difficulty settings.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Frontend uses backend-loaded GameConfig to drive gameplay tuning (speed, objectives, layout, etc.) without code changes for balancing.",
+      "reason": "Frontend derives only activity duration from config; activity target counts and objectives are hardcoded (10/15/12). Runtime tractor speed/turn speed are also hardcoded in applyConfig rather than read from GameConfig.",
+      "evidence": [
+        "frontend/src/game/gameplay/activities/types.ts",
+        "frontend/src/game/config/applyConfig.ts"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Admin-only UI can update the new GameConfig fields (3D + activities) and changes take effect after reload/refresh.",
+      "reason": "AdminConfigPanel only edits farmSettings.activityDuration/growthRate/yieldRate and ambientLight; it does not expose 3D gameplay tuning (tractor speed/turning, layout) or activity parameters (targets/difficulty) beyond duration.",
+      "evidence": [
+        "frontend/src/admin/AdminConfigPanel.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Repository includes documentation describing how to wrap the web build in an Android WebView/wrapper approach for Play Store upload (without adding native Android code).",
+      "reason": "No documentation/README-style file is shown added in the diff summary related to a WebView/wrapper delivery path.",
+      "evidence": []
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User Profile system (get/save caller profile, view other profiles with admin exception).",
+      "reason": "Not requested by any requirement; BuildRequest focuses on 3D gameplay, farming activities, and configurable tuning.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/game/screens/StartScreen.tsx"
+      ]
+    },
+    {
+      "description": "Persistent farm data storage/query API (PersistentFarmData, getPersistentFarmData, internalUpdateFarmData, etc.).",
+      "reason": "Not requested; requirements specify gameplay activities and config tuning, not persistence/leaderboards/farm data APIs.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "confidence": 0.68,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/PLAY_STORE.md",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/admin/AdminConfigPanel.tsx",
+    "frontend/src/admin/useAdminStatus.ts",
+    "frontend/src/game/assets/textures.ts",
+    "frontend/src/game/config/applyConfig.ts",
+    "frontend/src/game/config/defaults.ts",
+    "frontend/src/game/config/useGameConfig.ts",
+    "frontend/src/game/gameplay/ActivityManager.ts",
+    "frontend/src/game/gameplay/activities/HarvestingActivity.ts",
+    "frontend/src/game/gameplay/activities/PlowingActivity.ts",
+    "frontend/src/game/gameplay/activities/SowingActivity.ts",
+    "frontend/src/game/gameplay/activities/types.ts",
+    "frontend/src/game/input/OnScreenControls.tsx",
+    "frontend/src/game/input/types.ts",
+    "frontend/src/game/input/useCombinedControls.ts",
+    "frontend/src/game/input/useKeyboardControls.ts",
+    "frontend/src/game/screens/GameOverScreen.tsx",
+    "frontend/src/game/screens/GameScreen.tsx",
+    "frontend/src/game/screens/StartScreen.tsx",
+    "frontend/src/game/three/FarmScene.tsx",
+    "frontend/src/game/three/TractorRig.tsx",
+    "frontend/src/game/ui/HUD.tsx",
+    "frontend/src/game/ui/layout.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

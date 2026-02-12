@@ -1,0 +1,250 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "3D tractor–trolley farming game (R3F) with configurable gameplay + mobile delivery docs",
+  "requirements": [
+    {
+      "id": "REQ-7",
+      "summary": "Replace the existing tractor gameplay with a 3D React Three Fiber scene featuring a controllable tractor + attached trolley, farm environment, and the same start/play/game-over/restart loop with keyboard + on-screen controls.",
+      "acceptanceCriteria": [
+        "The main gameplay scene renders in 3D (not a 2D/top-down canvas) using React Three Fiber.",
+        "The player controls a tractor with a visible attached trolley; movement works on desktop (keyboard) and mobile (on-screen controls).",
+        "The game still has the screens/loop: start -> play -> game over -> restart."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add/confirm required 3D dependencies for a 3D game using React Three Fiber (e.g., @react-three/fiber, three, and optionally @react-three/drei) and ensure build scripts remain compatible."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app shell that preserves the start -> play -> game over -> restart loop and wires navigation/state between screens (StartScreen, GameScreen, GameOverScreen)."
+        },
+        {
+          "path": "frontend/src/game/screens/StartScreen.tsx",
+          "operation": "create",
+          "description": "Implement the start screen UI with a clear Play action that transitions into the 3D gameplay. Keep layout mobile-friendly and expose a place to show controls/help."
+        },
+        {
+          "path": "frontend/src/game/screens/GameScreen.tsx",
+          "operation": "create",
+          "description": "Implement the main 3D gameplay screen containing the React Three Fiber Canvas, HUD, and input wiring; render a tractor mesh with an attached trolley and basic arcade driving in a farm environment."
+        },
+        {
+          "path": "frontend/src/game/screens/GameOverScreen.tsx",
+          "operation": "create",
+          "description": "Implement the game-over screen UI that shows failure reason/score/progress and offers Restart (returns to Start or restarts Play, matching the existing loop)."
+        },
+        {
+          "path": "frontend/src/game/three/FarmScene.tsx",
+          "operation": "create",
+          "description": "Create the 3D world composition for the farm (ground/field tiles, props/obstacles, lights/camera) using React Three Fiber; apply runtime-tunable values from GameConfig where applicable (hooked in REQ-9)."
+        },
+        {
+          "path": "frontend/src/game/three/TractorRig.tsx",
+          "operation": "create",
+          "description": "Create the tractor + attached trolley rendering and transform logic (simple arcade physics), exposing a small API for movement/turning and interaction triggers."
+        },
+        {
+          "path": "frontend/src/game/input/useKeyboardControls.ts",
+          "operation": "create",
+          "description": "Implement desktop keyboard input mapping (accelerate/brake/steer/action) and expose a normalized control state for the tractor."
+        },
+        {
+          "path": "frontend/src/game/input/OnScreenControls.tsx",
+          "operation": "create",
+          "description": "Implement touch-friendly on-screen controls (e.g., steer + throttle + action buttons) for mobile. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/input/useCombinedControls.ts",
+          "operation": "create",
+          "description": "Combine keyboard and on-screen inputs into a single control state consumed by TractorRig and gameplay systems."
+        },
+        {
+          "path": "frontend/src/game/assets/textures.ts",
+          "operation": "create",
+          "description": "Centralize references to generated image assets for use as textures/sprites in the 3D scene and UI: frontend/public/assets/generated/field-tile.dim_512x512.png, frontend/public/assets/generated/haybale.dim_256x256.png, frontend/public/assets/generated/obstacle-rock.dim_256x256.png, frontend/public/assets/generated/tractor-topdown.dim_512x512.png, frontend/public/assets/generated/logo-badge.dim_512x512.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/field-tile.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated asset as a static frontend resource used by the 3D farm environment (e.g., ground/field texture)."
+        },
+        {
+          "path": "frontend/public/assets/generated/haybale.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated asset as a static frontend resource used by the 3D farm environment (e.g., prop texture)."
+        },
+        {
+          "path": "frontend/public/assets/generated/obstacle-rock.dim_256x256.png",
+          "operation": "create",
+          "description": "Add the generated asset as a static frontend resource used by the 3D farm environment (e.g., obstacle texture)."
+        },
+        {
+          "path": "frontend/public/assets/generated/tractor-topdown.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated asset as a static frontend resource usable in HUD/tutorial diagrams or minimap-like UI (if implemented)."
+        },
+        {
+          "path": "frontend/public/assets/generated/logo-badge.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated asset as a static frontend resource usable in the start screen branding/HUD."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Add at least three playable farming activities in the 3D world (e.g., plowing, sowing, watering/harvesting) with clear objectives, progress/score, and completion/failure wired into the game loop.",
+      "acceptanceCriteria": [
+        "At least 3 distinct farming activities are playable in-game (e.g., plowing, sowing, harvesting or watering).",
+        "Each activity has a clear objective shown in the UI (e.g., complete X rows/plots within time or avoid missing plots).",
+        "Completing an activity advances progress and/or score; failure routes to game-over with a restart option."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/gameplay/activities/types.ts",
+          "operation": "create",
+          "description": "Define a small, config-driven activity model (activity id, objective text, target counts/timers, scoring, failure conditions) that can be driven by GameConfig values (hooked in REQ-9)."
+        },
+        {
+          "path": "frontend/src/game/gameplay/activities/PlowingActivity.ts",
+          "operation": "create",
+          "description": "Implement the plowing loop: detect tractor passes over plots/rows, track completion vs target, and emit success/failure events."
+        },
+        {
+          "path": "frontend/src/game/gameplay/activities/SowingActivity.ts",
+          "operation": "create",
+          "description": "Implement the sowing loop: require an action input near plots/rows (or continuous sowing while moving), track planted count/coverage, and emit success/failure events."
+        },
+        {
+          "path": "frontend/src/game/gameplay/activities/HarvestingActivity.ts",
+          "operation": "create",
+          "description": "Implement the harvesting loop: collect from mature plots (or haybales) into the trolley, track yield/targets, and emit success/failure events."
+        },
+        {
+          "path": "frontend/src/game/gameplay/ActivityManager.ts",
+          "operation": "create",
+          "description": "Orchestrate activity sequencing, transitions, timers, and scoring; integrate with the existing game state machine so failures route to game-over and success advances progress."
+        },
+        {
+          "path": "frontend/src/game/state/gameState.ts",
+          "operation": "create",
+          "description": "Add a lightweight game state machine for start/play/game-over plus activity state (current activity, progress, timers, score, failure reason) consumed by screens."
+        },
+        {
+          "path": "frontend/src/game/ui/HUD.tsx",
+          "operation": "create",
+          "description": "Display objective text, progress (rows/plots/yield), timers, score, and contextual action prompts; ensure readability on mobile. Verify the component's usage instructions before implementing (if using shadcn-ui primitives)."
+        },
+        {
+          "path": "frontend/src/game/screens/GameScreen.tsx",
+          "operation": "modify",
+          "description": "Wire ActivityManager + HUD into the 3D gameplay screen; ensure activity completion advances progress/score and failure transitions to GameOverScreen."
+        },
+        {
+          "path": "frontend/src/game/three/FarmScene.tsx",
+          "operation": "modify",
+          "description": "Add interactive field/plot representations (rows/tiles) and colliders/triggers needed to support activity detection (plow/sow/harvest) with simple arcade interactions."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Load GameConfig from the backend to tune 3D scene + farming activity parameters, and provide an admin-only UI to update config and refresh it without gameplay code changes.",
+      "acceptanceCriteria": [
+        "Backend GameConfig includes fields to tune 3D gameplay and farming activities (e.g., tractor speed, turning, field/plot layout, activity durations/targets, difficulty settings).",
+        "Frontend loads GameConfig from the backend on startup and uses it to drive gameplay tuning (speed, objectives, layout, etc.).",
+        "Admin-only UI can update the new GameConfig fields and changes take effect after reload (or via an explicit refresh action)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/game/config/defaults.ts",
+          "operation": "create",
+          "description": "Define safe client-side defaults/fallbacks for gameplay tuning when backend GameConfig fields are missing/invalid, to keep the game playable."
+        },
+        {
+          "path": "frontend/src/game/config/useGameConfig.ts",
+          "operation": "create",
+          "description": "Create a React Query hook that loads GameConfig from backend on startup and exposes refresh/update helpers for use by gameplay and admin UI."
+        },
+        {
+          "path": "frontend/src/game/config/applyConfig.ts",
+          "operation": "create",
+          "description": "Implement a small adapter that maps backend GameConfig into runtime parameters used by the 3D scene, tractor controls, and activity settings (tuning without code changes)."
+        },
+        {
+          "path": "frontend/src/game/three/FarmScene.tsx",
+          "operation": "modify",
+          "description": "Read tunable scene parameters from the loaded GameConfig mapping (e.g., gravity-like feel, ambient light, field layout density) and apply them when rendering/updating."
+        },
+        {
+          "path": "frontend/src/game/three/TractorRig.tsx",
+          "operation": "modify",
+          "description": "Use GameConfig-driven tuning for tractor handling (e.g., speed, turn rate, friction-like damping) via the config adapter."
+        },
+        {
+          "path": "frontend/src/game/gameplay/ActivityManager.ts",
+          "operation": "modify",
+          "description": "Use GameConfig-driven parameters for activity targets/durations/difficulty and ensure UI objective strings reflect the current config."
+        },
+        {
+          "path": "frontend/src/admin/AdminConfigPanel.tsx",
+          "operation": "create",
+          "description": "Create an admin-only config editor UI for the new GameConfig fields (3D + farming parameters) and provide Update + Refresh actions. Use the authorization component/system to gate access to admins only; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/admin/useAdminStatus.ts",
+          "operation": "create",
+          "description": "Create a helper hook that checks whether the current caller is admin (via backend role/admin checks) and exposes loading/denied states; use it to guard the admin-only config UI. Use the authorization component/system; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/screens/StartScreen.tsx",
+          "operation": "modify",
+          "description": "Wire AdminConfigPanel into an admin-only section on the start screen (or behind a clearly labeled admin button), and add a Refresh Config action to apply changes after reload or explicit refresh."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure app startup triggers a GameConfig fetch early (via the hook/provider usage) so gameplay uses backend-tuned parameters from the first play session."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Make the game UI mobile-responsive with touch-friendly controls and add documentation describing how to publish via an Android WebView/wrapper for Play Store.",
+      "acceptanceCriteria": [
+        "Game UI is responsive on common mobile viewport sizes, with touch-friendly controls and readable HUD.",
+        "Repository includes a short documentation page describing a WebView/wrapper approach to publish the web game to Play Store (without adding native Android code to this project)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add/adjust global responsive styles for full-viewport gameplay, safe-area handling, and touch-friendly sizing; keep styling minimal and compatible with the existing template."
+        },
+        {
+          "path": "frontend/src/game/ui/layout.ts",
+          "operation": "create",
+          "description": "Centralize responsive layout constants (HUD scale breakpoints, control button sizes, safe-area padding) used across screens and controls."
+        },
+        {
+          "path": "frontend/src/game/input/OnScreenControls.tsx",
+          "operation": "modify",
+          "description": "Improve touch ergonomics for mobile: larger hit targets, safe-area spacing, and portrait/landscape layout adjustments; ensure it remains usable across common viewport sizes. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/game/ui/HUD.tsx",
+          "operation": "modify",
+          "description": "Make HUD responsive (scale text, reposition objective/progress) to remain readable on small screens and avoid overlapping on-screen controls. Verify the component's usage instructions before implementing (if using shadcn-ui primitives)."
+        },
+        {
+          "path": "frontend/PLAY_STORE.md",
+          "operation": "create",
+          "description": "Add concise developer documentation describing how to wrap the built web app in an Android WebView/wrapper for Play Store upload (high-level steps, settings like fullscreen/orientation, handling offline, and where to point the WebView). Do not add native Android code to this repository."
+        }
+      ]
+    }
+  ]
+}

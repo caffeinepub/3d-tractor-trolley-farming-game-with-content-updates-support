@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Shift to a 3D tractor–trolley farming game with updatable content, intended for eventual Play Store release (likely via Android WebView/wrapper if built as web).",
+  "architectural_notes": [
+    "Target experience is 3D tractor + trolley farming game with future updates.",
+    "Planned distribution includes Play Store; likely requires an Android wrapper/WebView if the game is web-based."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-playable-tractor-themed-game-in-the-react-frontend-with-simple-well-defined-gameplay-loops-start-play-game-over-restart-and-basic-controls-suitable-for-desktop-and-mobile-keyboard-on-screen-controls",
+      "title": "Create a playable tractor-themed game in the React frontend with simple, well-defined gameplay loops (start, play, game over, restart) and basic controls suitable for desktop and mobile (keyboard + on-screen controls).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-the-game-to-be-content-driven-so-future-updates-can-be-applied-by-changing-server-provided-configuration-rather-than-rewriting-core-gameplay-code-the-frontend-must-load-a-gameconfig-from-the-backend-on-startup-e-g-map-track-layout-tractor-speed-obstacle-density-scoring-rules-and-use-it-to-drive-gameplay",
+      "title": "Design the game to be content-driven so future updates can be applied by changing server-provided configuration rather than rewriting core gameplay code. The frontend must load a 'GameConfig' from the backend on startup (e.g., map/track layout, tractor speed, obstacle density, scoring rules) and use it to drive gameplay.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-only-ui-to-update-the-gameconfig-future-updates-using-internet-identity-authentication-with-access-restricted-to-a-configurable-admin-principal-stored-in-the-backend",
+      "title": "Add an admin-only UI to update the GameConfig (future updates) using Internet Identity authentication, with access restricted to a configurable admin Principal stored in the backend.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-distinct-visual-theme-for-the-tractor-game-ui-colors-typography-layout-and-component-styling-and-apply-it-consistently-across-the-game-screens",
+      "title": "Create a coherent, distinct visual theme for the tractor game UI (colors, typography, layout, and component styling) and apply it consistently across the game screens.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-static-art-assets-for-the-tractor-game-background-field-tractor-obstacles-collectibles-under-frontend-public-assets-generated-and-render-them-in-the-game-ui",
+      "title": "Add static art assets for the tractor game (background/field, tractor, obstacles/collectibles) under frontend/public/assets/generated and render them in the game UI.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-3d-version-of-the-tractor-game-using-react-three-fiber-including-a-controllable-tractor-with-an-attached-trolley-driving-in-a-farm-environment-while-keeping-the-existing-start-play-game-over-restart-loop-and-supporting-both-keyboard-and-on-screen-controls",
+      "title": "Implement a 3D version of the tractor game using React Three Fiber, including a controllable tractor with an attached trolley driving in a farm environment, while keeping the existing start/play/game-over/restart loop and supporting both keyboard and on-screen controls.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-farming-gameplay-activities-as-core-loops-e-g-plowing-sowing-watering-harvesting-that-can-be-performed-with-the-tractor-trolley-in-the-3d-world-with-clear-objectives-and-completion-failure-conditions-tied-into-the-game-loop",
+      "title": "Add farming gameplay activities as core loops (e.g., plowing, sowing, watering, harvesting) that can be performed with the tractor–trolley in the 3D world, with clear objectives and completion/failure conditions tied into the game loop.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-extend-the-content-driven-gameconfig-so-3d-scene-parameters-and-farming-activity-parameters-can-be-updated-from-the-backend-and-ensure-the-frontend-loads-and-applies-this-gameconfig-on-startup-and-during-admin-updates-without-requiring-gameplay-code-changes-for-tuning-balancing",
+      "title": "Extend the content-driven GameConfig so 3D scene parameters and farming-activity parameters can be updated from the backend, and ensure the frontend loads and applies this GameConfig on startup and during admin updates (without requiring gameplay code changes for tuning/balancing).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-play-store-friendly-delivery-path-by-making-the-game-ui-fully-mobile-responsive-and-adding-developer-documentation-explaining-how-to-wrap-the-web-build-in-an-android-webview-wrapper-for-play-store-upload",
+      "title": "Add a Play Store–friendly delivery path by making the game UI fully mobile-responsive and adding developer documentation explaining how to wrap the web build in an Android WebView/wrapper for Play Store upload.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a tractor-themed game designed to support future updates (updatable content/features).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Implement Motoko backend APIs to store and serve the current GameConfig and to persist basic player results (e.g., recent scores and best scores).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Build the game in 3D (tractor + tractor-trolley) rather than 2D/top-down.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Add farming gameplay activities (e.g., plowing/sowing/harvesting/watering) as core loops for the tractor-trolley game.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Support packaging/release path for Play Store upload (e.g., Android wrapper/WebView around the game, basic mobile-ready controls).",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "3d",
+  "projectName": "3D Tractor-Trolley Farming Game with Content Updates Support",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
